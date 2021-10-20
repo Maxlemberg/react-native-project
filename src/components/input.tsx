@@ -6,10 +6,11 @@ interface IInput {
     holderName: string,
     security: boolean,
     value: string,
-    onChangeText: (value:string) => void
+    onChangeText: (value: string) => void,
+    onFocus?: () => void
 }
 
-const Input = ({ title, holderName, security, value, onChangeText }:IInput) => {
+const Input = ({ title, holderName, security, value, onChangeText, onFocus }:IInput) => {
   
     return (
         <View style={{marginTop: 10}}>
@@ -21,6 +22,7 @@ const Input = ({ title, holderName, security, value, onChangeText }:IInput) => {
                 secureTextEntry={security}
                 value={value}
                 onChangeText={onChangeText}
+                onFocus={onFocus}
                />
           </View>
     )

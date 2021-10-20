@@ -8,24 +8,31 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
-  SafeAreaView
+  SafeAreaView,
+  TouchableOpacity
 } from "react-native";
 import LottieView from 'lottie-react-native';
-import Input from '../components/input';
-import Button from '../components/button';
+import Input from '../../components/input';
+import MyButton from '../../components/button';
+import AnimationFile from '../../../assets/lottieAnimation/load-walking-dog.json';
+import { useNavigation } from '@react-navigation/native';
 
 interface IRegister {
   email: string,
-  password: string
+  password: string,
+  name: string
 }
 
 const initialState = {
   email: '',
-  password: ''
+  password: '',
+  name:''
 }
 
-export default function RegisterPage() {
+export default function RegisterPage({navigation}:any) {
+  // const navigation = useNavigation();
   const [state, setState] = useState<IRegister>(initialState);
+  const [isKeyboard, setIsKeyboard] = useState(false);
   const [dimensions, setDimensions] = useState(Dimensions.get('window').width - 20 * 2);
   
   useEffect(() => {
@@ -37,31 +44,45 @@ export default function RegisterPage() {
     return () => {
       Dimensions.removeEventListener('change', onChangeScreen);
     }
-})
+  })
 
   const keyboardHide = () => {
     Keyboard.dismiss();
     setState(initialState);
+    setIsKeyboard(false);
     console.log(state);
     };
   
   return (
   <SafeAreaView style={styles.container}>
     <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+          setIsKeyboard(false);
+          Keyboard.dismiss()
+        }}>
       <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height" }
           style={styles.containerBoard}
-        >
+          >
        <View style={styles.boxAnimation}>
-            <LottieView source={require('../../assets/lottieAnimation/book.json')} autoPlay loop />
+            <LottieView source={AnimationFile} autoPlay loop />
         </View>
-        <Text style={styles.title}>Hello again!</Text>
+          <Text style={styles.title}>Wellcome to App</Text>
           <View style={{
             ...styles.form,
-            marginBottom: 30,
+            marginBottom: isKeyboard ? 10 : 20,
             width: dimensions- 10 * 2
             }}>
+
+              <Input
+                title={'Name'}
+                holderName={'name'}
+                security={false}
+                onChangeText={(value:string) => setState((prevState) => ({ ...prevState, name: value }))}
+                value={state.name}
+                onFocus={()=> setIsKeyboard(true)}
+              />
 
               <Input
                 title={'Email address'}
@@ -69,24 +90,30 @@ export default function RegisterPage() {
                 security={false}
                 onChangeText={(value:string) => setState((prevState) => ({ ...prevState, email: value }))}
                 value={state.email}
+                onFocus={()=> setIsKeyboard(true)}
               />
               
               <Input title={'Password'}
                 holderName={'password'}
                 security={true}
                 value={state.password}
-                onChangeText={(value:string) => setState((prevState) => ({ ...prevState, password: value }))}
+                onChangeText={(value: string) => setState((prevState) => ({ ...prevState, password: value }))}
+                onFocus={()=> setIsKeyboard(true)}
               />
 
-              <Button text={'SIGN IN'} keyboardHide={ keyboardHide}/>
-    
+              <MyButton text={'SIGN UP'} keyboardHide={ keyboardHide}/>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Login')}>
+                <Text style={{ textAlign: 'center',  color:'#ff8c00', fontSize: 14, marginTop: 10}}>
+                  go to login
+                </Text>
+              </TouchableOpacity>
            </View>
        </KeyboardAvoidingView>
        </TouchableWithoutFeedback>
       </View>
    </SafeAreaView>
   );
-  
 }
 
 const styles = StyleSheet.create({
@@ -113,16 +140,18 @@ const styles = StyleSheet.create({
     elevation: 40,
     backgroundColor: '#fffff0',
     width: '90%',
-    padding: 10, 
+    paddingHorizontal: 10,
+    paddingBottom: 10
   },
 
   boxAnimation: {
     position: 'absolute',
     top: 20,
     width: '80%',
-    height: 300,
+    height: 280,
     borderWidth: 1,
     borderColor: 'transparent',
-    borderRadius: 50,
+    borderRadius: 200,
+    backgroundColor: '#e6e6fa'
   }
 });

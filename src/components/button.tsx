@@ -6,7 +6,7 @@ interface IButton {
     keyboardHide: () => void
 }
 
-const Button = ({text, keyboardHide}: IButton) => {
+const MyButton = ({text, keyboardHide}: IButton) => {
     return (
         <TouchableOpacity
             activeOpacity={0.5}
@@ -19,7 +19,7 @@ const Button = ({text, keyboardHide}: IButton) => {
     )
 }
 
-export default Button;
+export default MyButton;
 
 const styles = StyleSheet.create({
   btn: {

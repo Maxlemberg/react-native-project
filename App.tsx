@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import { useFonts } from 'expo-font';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
-import RegisterPage from './src/screens/RegisterPage';
-import LoginPage from './src/screens/LoginPage';
+import { NavigationContainer } from '@react-navigation/native';
+
+import useRoute from './src/routes/router'
+
 
 const loadAplicationFonts = async () => {
   await Font.loadAsync({
@@ -11,10 +13,11 @@ const loadAplicationFonts = async () => {
   })
 }
 
+
 export default function App() {
   const [loaded, setLoaded] = useState(false);
    // const [loaded, error] = useFonts({ Montserrat: require('./assets/fonts/Montserrat-SemiBold.ttf')});
-
+  const routing = useRoute(true);
   if (!loaded) {
     return <AppLoading
       startAsync={loadAplicationFonts}
@@ -24,10 +27,9 @@ export default function App() {
   }
 
   return (
-    <>
-      {/* <LoginPage/> */}
-      <RegisterPage/>
-    </>
+    <NavigationContainer>
+      {routing}
+    </NavigationContainer>
   )
 }
 

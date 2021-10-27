@@ -1,3 +1,3 @@
 # react-native-project
 
-video navigation https://www.youtube.com/watch?v=X-24UI8x1RM
+video ImagePicker https://www.youtube.com/watch?v=X-24UI8x1RM

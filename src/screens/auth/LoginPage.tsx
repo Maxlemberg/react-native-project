@@ -19,7 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-interface IRegister {
+interface ILogin {
   email: string,
   password: string
 }
@@ -29,9 +29,9 @@ const initialState = {
   password: ''
 }
 
-export default function RegisterPage({navigation}:any) {
+export default function LoginPage({navigation}:any) {
   // const navigation = useNavigation();
-  const [state, setState] = useState<IRegister>(initialState);
+  const [state, setState] = useState<ILogin>(initialState);
   const [dimensions, setDimensions] = useState(Dimensions.get('window').width - 20 * 2);
 
   useEffect(() => {

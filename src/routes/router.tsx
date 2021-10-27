@@ -1,14 +1,16 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+//screens
 import StartPage from '../../src/screens/StartPage';
 import List from '../screens/main/List';
 import Stores from "../../src/screens/main/Stores";
 import Audio from "../screens/main/Audio";
 import RegisterPage from '../../src/screens/auth/RegisterPage';
 import LoginPage from '../../src/screens/auth/LoginPage';
+import Settings from '../../src/screens/main/Settings';
 //icons
-import { Octicons, FontAwesome, Feather } from '@expo/vector-icons';
+import { Octicons, FontAwesome, Feather, MaterialIcons } from '@expo/vector-icons';
 
 const MainStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
@@ -37,7 +39,7 @@ const useRoute = (isAuth: boolean) => {
             <MainTab.Screen name='List' component={List}
                 options={{ headerShown: false,
                     tabBarIcon: ({ focused, size, color }) =>
-                        <Octicons name="book" size={focused ? 35 : size} color={color} />
+                      <Octicons name="book" size={focused ? 35 : size} color={color} />
                 }} />
             <MainTab.Screen name='Audio' component={Audio}
             options={{
@@ -47,6 +49,10 @@ const useRoute = (isAuth: boolean) => {
             <MainTab.Screen name='Stores' component={Stores} options={{
           tabBarIcon: ({ focused, size, color }) =>
               <Feather name="shopping-cart" size={focused ? 35 : size} color={color} />
+          }} />
+          <MainTab.Screen name='Settings' component={Settings} options={{
+          tabBarIcon: ({ focused, size, color }) =>
+              <MaterialIcons name="settings" size={focused ? 35 : size} color={color} />
           }} />
           </MainTab.Navigator>
 }

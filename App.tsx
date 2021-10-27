@@ -1,21 +1,33 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, {useState} from "react";
+import { useFonts } from 'expo-font';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import RegisterPage from './src/screens/RegisterPage';
+import LoginPage from './src/screens/LoginPage';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>hello world</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const loadAplicationFonts = async () => {
+  await Font.loadAsync({
+    Montserrat: require('./assets/fonts/Montserrat-SemiBold.ttf'),
+  })
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export default function App() {
+  const [loaded, setLoaded] = useState(false);
+   // const [loaded, error] = useFonts({ Montserrat: require('./assets/fonts/Montserrat-SemiBold.ttf')});
+
+  if (!loaded) {
+    return <AppLoading
+      startAsync={loadAplicationFonts}
+      onFinish={() => setLoaded(true)}
+      onError={console.warn}
+    />
+  }
+
+  return (
+    <>
+      {/* <LoginPage/> */}
+      <RegisterPage/>
+    </>
+  )
+}
+
